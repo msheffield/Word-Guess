@@ -1,0 +1,12 @@
+/* .keyboard {
+    border-style: groove;
+    border-width: 2px;
+    margin: 20px;
+} */
+
+.key {
+    border-style: ridge;
+    border-width: 1px;
+    padding: 5px;
+    text-align: center;
+}
