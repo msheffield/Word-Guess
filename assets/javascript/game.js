@@ -6,17 +6,36 @@ var game = {
     words: [],
     wins: 0,
     loses: 0,
-    
-
 }
 
-document.onkeyup = function(event) {
-    input = event.key.toUpperCase();
+var round = {
+    lives: 9,
 }
 
+var keyboard = {
+    correct_keys: [],
+    wrong_keys: [],
+}
 
-function uniquechar(input, array1, array2) {
-    if (!(array1.includes(input)) & !(array2.includes(input))) {
+// GAME FUNCTIONS //
+
+// Generator a random word, check if word has been used before (if not then recursion)
+function wordGen(pastWords) {
+    //place holder for random word gen
+    word = "hello";
+
+    /* if (pastWords.includes(word)) {
+        wordGen(pastWords);
+    } */
+
+    return word;
+}
+
+// ROUND FUNCTIONS //
+
+// Check to see if char has been guessed before
+function uniquechar(input, keyboard) {
+    if (!(keyboard.correct_keys.includes(input)) & !(keyboard.wrong_keys.includes(input))) {
         return true;
     }
     else {
@@ -24,13 +43,7 @@ function uniquechar(input, array1, array2) {
     }
 }
 
-
-function wordGen(pastWords) {
-    word = "hello";
-    return word;
-}
-
-
+// Does word include char
 function guess(word, char) {
     if (word.includes(char)) {
         return true;
@@ -40,7 +53,11 @@ function guess(word, char) {
     }
 }
 
+//KEYBOARD FUNCTIONS //
 
-game = game;
 
-//game.startRound()
+
+
+
+
+// MAIN //
