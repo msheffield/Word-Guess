@@ -21,7 +21,7 @@ var hiddenWord = {
         word_caps = string.toUpperCase();
         word_array = word_caps.split("");
         this.word = word_array;
-    },
+    }
 }
 
 var keyboard = {
@@ -35,7 +35,24 @@ var keyboard = {
         else {
             return false;
         }
+    },
+
+    // Highlight key
+    correctKey(key) {
+        this.correct_keys.push(key)
+
+        var id = "#" + key;
+        $(id).css("color", "greenyellow");
+    },
+
+    // Wrong Key
+    wrongKey(key) {
+        this.wrong_keys.push(key)
+
+        var id = "#" + key;
+        $(id).css("color", "red");
     }
+
 }
 
 
@@ -59,9 +76,6 @@ function wordGen(pastWords) {
 
 
 // ROUND FUNCTIONS --------------------------------
-
-// Check to see if char has been guessed before
-
 
 // Does word include char
 function guess(word, char) {
@@ -98,14 +112,6 @@ function revealChar(char) {
 
 // KEYBOARD FUNCTIONS --------------------------------
 
-// Highlight key
-function highlightKey(char) {
-    //var id = "#" + char;
-    $("#H").attr("class", "highlighted");
-}
-
-
-
 
 
 // TESTING --------------------------------
@@ -113,8 +119,9 @@ var word = "hello"
 var hidden = hiddenWord;
 hidden.convertWord(word);
 createPlaceholders(hidden.word);
-revealChar("H")
-highlightKey("H")
+revealChar("H");
+correctKey("H");
+wrongKey("W");
 
 
 // MAIN --------------------------------
