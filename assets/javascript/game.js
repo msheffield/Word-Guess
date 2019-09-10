@@ -8,10 +8,6 @@ var game = {
     loses: 0,
 }
 
-var round = {
-    lives: 9,
-}
-
 var hiddenWord = {
 
     word: [],
@@ -77,14 +73,30 @@ function wordGen(pastWords) {
 
 // ROUND FUNCTIONS --------------------------------
 
+// MAIN ROUND
+function round(game, hiddenword, keyboard) {
+    lives = 9
+    win = false;
+
+    while (lives > 0 & !win) {
+        key = "H";
+        if (guess(hiddenWord, key)) {
+            keyboard.correctKey(key);
+            return true;
+        }
+        keyboard.wrongKey(key);
+        return false;
+    }
+        
+}
+
 // Does word include char
 function guess(word, char) {
     if (word.includes(char)) {
         return true;
     }
-    else {
-        return false;
-    }
+    
+    return false;
 }
 
 
@@ -115,13 +127,7 @@ function revealChar(char) {
 
 
 // TESTING --------------------------------
-var word = "hello"
-var hidden = hiddenWord;
-hidden.convertWord(word);
-createPlaceholders(hidden.word);
-revealChar("H");
-correctKey("H");
-wrongKey("W");
+kb = keyboard;
 
 
 // MAIN --------------------------------
