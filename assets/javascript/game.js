@@ -17,7 +17,7 @@ var hiddenWord = {
     word: [],
 
     // Initialize hidden word and display on screen
-    convertword(string) {
+    convertWord(string) {
         word_caps = string.toUpperCase();
         word_array = word_caps.split("");
         this.word = word_array;
@@ -27,9 +27,19 @@ var hiddenWord = {
 var keyboard = {
     correct_keys: [],
     wrong_keys: [],
+
+    uniqueChar(input, keyboard) {
+        if (!(correct_keys.includes(input)) & !(wrong_keys.includes(input))) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 
-// GAME FUNCTIONS //
+
+// GAME FUNCTIONS --------------------------------
 
 // Generator a random word - Recursive if word has been used or if word is longer than 12 letters
 function wordGen(pastWords) {
@@ -47,17 +57,11 @@ function wordGen(pastWords) {
     return word;
 }
 
-// ROUND FUNCTIONS //
+
+// ROUND FUNCTIONS --------------------------------
 
 // Check to see if char has been guessed before
-function uniquehar(input, keyboard) {
-    if (!(keyboard.correct_keys.includes(input)) & !(keyboard.wrong_keys.includes(input))) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
+
 
 // Does word include char
 function guess(word, char) {
@@ -69,7 +73,8 @@ function guess(word, char) {
     }
 }
 
-// HIDDEN WORD FUNCTIONS //
+
+// HIDDEN WORD FUNCTIONS --------------------------------
 
 // Create divs
 function createPlaceholders(word) {
@@ -91,15 +96,25 @@ function revealChar(char) {
 }
 
 
-//KEYBOARD FUNCTIONS //
+// KEYBOARD FUNCTIONS --------------------------------
+
+// Highlight key
+function highlightKey(char) {
+    //var id = "#" + char;
+    $("#H").attr("class", "highlighted");
+}
 
 
 
 
 
-
-// MAIN //
+// TESTING --------------------------------
+var word = "hello"
 var hidden = hiddenWord;
-hidden.convertword("hello");
+hidden.convertWord(word);
 createPlaceholders(hidden.word);
 revealChar("H")
+highlightKey("H")
+
+
+// MAIN --------------------------------
