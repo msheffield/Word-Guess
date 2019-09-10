@@ -16,7 +16,7 @@ var hiddenWord = {
     // Generator a random word - Recursive if word has been used or if word is longer than 12 letters
     wordGen() {
         //place holder for random word gen
-        newWord = "hello";
+        newWord = "hi";
     
         this.pastWords.push(newWord);
         
@@ -79,6 +79,20 @@ var keyboard = {
 
 // GAME FUNCTIONS --------------------------------
 
+function round(game, hiddenword, keyboard) {
+    console.log("round start");
+    hiddenword.wordGen();
+    keyboard.clear();
+    createPlaceholders(hiddenword.word);
+
+    document.onkeyup = function(event) {
+        uInput = event.key.toUpperCase();
+        guess(uInput, game, hiddenword, keyboard);
+        update(game, hiddenword, keyboard);
+    };
+    
+}
+
 // Does word include char
 function guess(char, game, hiddenword, keyboard) {
     if (keyboard.validChar(char) & keyboard.uniqueChar(char)) {
@@ -94,11 +108,14 @@ function guess(char, game, hiddenword, keyboard) {
 }
 
 function update(game, hiddenword, keyboard) {
-    if (game.lives = 0) {
+    console.log(keyboard.correct_keys.length)
+    console.log(hiddenword.word.length)
+    if (game.lives == 0) {
         game.loses += 1;
         reset(hiddenword,keyboard);
     }
-    else if (keyboard.correct_keys.length == hiddenword.word.length) {
+    
+    if (keyboard.correct_keys.length == hiddenword.word.length) {
         game.wins += 1;
         reset (hiddenword,keyboard);
     }
@@ -122,6 +139,7 @@ function convertWord(string) {
 // Create divs
 function createPlaceholders(word_array) {
     var row = document.getElementById("hidden-word");
+    $("#hidden-word").empty();
     
     for (i=0; i < word_array.length; i++) {
         var newDiv = document.createElement("h2");
@@ -139,16 +157,15 @@ function revealChar(char) {
 }
 
 
-// TESTING --------------------------------
-
-
 // MAIN --------------------------------
 game = game;
 hw = hiddenWord;
 kb = keyboard;
+var wins = document.getElementById("wins");
+var loses = document.getElementById("loses");
+var lives = document.getElementById("lives");
+wins.textContent = game.wins;
+loses.textContent = game.loses;
+lives.textContent = game.lives;
 
-hw.wordGen();
-createPlaceholders(hw.word);
-
-guess("H", game, hw, kb)
-guess(".", game, hw, kb)
+round(game, hw, kb);
