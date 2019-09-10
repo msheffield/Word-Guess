@@ -12,6 +12,18 @@ var round = {
     lives: 9,
 }
 
+var hiddenWord = {
+
+    word: [],
+
+    // Initialize hidden word and display on screen
+    convertword(string) {
+        word_caps = string.toUpperCase();
+        word_array = word_caps.split("");
+        this.word = word_array;
+    },
+}
+
 var keyboard = {
     correct_keys: [],
     wrong_keys: [],
@@ -19,12 +31,16 @@ var keyboard = {
 
 // GAME FUNCTIONS //
 
-// Generator a random word, check if word has been used before (if not then recursion)
+// Generator a random word - Recursive if word has been used or if word is longer than 12 letters
 function wordGen(pastWords) {
     //place holder for random word gen
     word = "hello";
 
     /* if (pastWords.includes(word)) {
+        wordGen(pastWords);
+    } */
+
+    /* if (length(word) > 12) {
         wordGen(pastWords);
     } */
 
@@ -34,7 +50,7 @@ function wordGen(pastWords) {
 // ROUND FUNCTIONS //
 
 // Check to see if char has been guessed before
-function uniquechar(input, keyboard) {
+function uniquehar(input, keyboard) {
     if (!(keyboard.correct_keys.includes(input)) & !(keyboard.wrong_keys.includes(input))) {
         return true;
     }
@@ -53,6 +69,26 @@ function guess(word, char) {
     }
 }
 
+// HIDDEN WORD FUNCTIONS //
+
+// Create divs
+function createPlaceholders(word) {
+    var row = document.getElementById("hidden-word");
+    
+    for (i=0; i < word.length; i++) {
+        var newDiv = document.createElement("div");
+        newDiv.textContent = "_";
+        newDiv.setAttribute("class", "col-md-1 hidden-char");
+        newDiv.setAttribute("id", word[i])
+        row.appendChild(newDiv);
+    }
+}
+
+function revealChar(word) {
+    
+}
+
+
 //KEYBOARD FUNCTIONS //
 
 
@@ -61,3 +97,6 @@ function guess(word, char) {
 
 
 // MAIN //
+var hidden = hiddenWord;
+hidden.convertword("hello");
+createPlaceholders(hidden.word);
