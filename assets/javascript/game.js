@@ -11,6 +11,25 @@ var game = {
 var hiddenWord = {
 
     word: [],
+    pastWords: [],
+
+    // Generator a random word - Recursive if word has been used or if word is longer than 12 letters
+    wordGen(pastWords) {
+        //place holder for random word gen
+        word = "hello";
+    
+        /* if (pastWords.includes(word)) {
+            wordGen(pastWords);
+        } */
+    
+        /* if (length(word) > 12) {
+            wordGen(pastWords);
+        } */
+    
+        pastWords.push(word);
+        
+        this.word = this.convertWord(word);
+    },
 
     // Initialize hidden word and display on screen
     convertWord(string) {
@@ -54,22 +73,6 @@ var keyboard = {
 
 // GAME FUNCTIONS --------------------------------
 
-// Generator a random word - Recursive if word has been used or if word is longer than 12 letters
-function wordGen(pastWords) {
-    //place holder for random word gen
-    word = "hello";
-
-    /* if (pastWords.includes(word)) {
-        wordGen(pastWords);
-    } */
-
-    /* if (length(word) > 12) {
-        wordGen(pastWords);
-    } */
-
-    return word;
-}
-
 
 // ROUND FUNCTIONS --------------------------------
 
@@ -95,7 +98,6 @@ function guess(word, char) {
     if (word.includes(char)) {
         return true;
     }
-    
     return false;
 }
 
@@ -128,6 +130,16 @@ function revealChar(char) {
 
 // TESTING --------------------------------
 kb = keyboard;
+
+createPlaceholders("HELLO")
+
+/* g = game;
+kb = keyboard;
+word = hiddenWord;
+
+while (g.wins < 1) {
+    round(g, )
+} */
 
 
 // MAIN --------------------------------
