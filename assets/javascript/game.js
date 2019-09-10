@@ -88,7 +88,7 @@ function createPlaceholders(word) {
 function revealChar(char) {
     var hidden = document.getElementById("hidden_" + char);
     hidden.textContent = char;
-]}
+}
 
 
 //KEYBOARD FUNCTIONS //
