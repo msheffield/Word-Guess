@@ -3,9 +3,9 @@ Javascript for Word-Guess game.
 */
 
 var game = {
-    words: [],
     wins: 0,
     loses: 0,
+    lives: 9,
 }
 
 var hiddenWord = {
@@ -14,37 +14,31 @@ var hiddenWord = {
     pastWords: [],
 
     // Generator a random word - Recursive if word has been used or if word is longer than 12 letters
-    wordGen(pastWords) {
+    wordGen() {
         //place holder for random word gen
-        word = "hello";
+        newWord = "hello";
     
-        /* if (pastWords.includes(word)) {
-            wordGen(pastWords);
-        } */
-    
-        /* if (length(word) > 12) {
-            wordGen(pastWords);
-        } */
-    
-        pastWords.push(word);
+        this.pastWords.push(newWord);
         
-        this.word = this.convertWord(word);
+        this.word = convertWord(newWord);
     },
-
-    // Initialize hidden word and display on screen
-    convertWord(string) {
-        word_caps = string.toUpperCase();
-        word_array = word_caps.split("");
-        this.word = word_array;
-    }
 }
 
 var keyboard = {
     correct_keys: [],
     wrong_keys: [],
+    letters: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
 
-    uniqueChar(input, keyboard) {
-        if (!(correct_keys.includes(input)) & !(wrong_keys.includes(input))) {
+    validChar(input) {
+        if (this.letters.includes(input)) {
+            return true;
+        }
+        alert("Invalid key");
+        return false;
+    },
+
+    uniqueChar(input) {
+        if (!(this.correct_keys.includes(input)) & !(this.wrong_keys.includes(input))) {
             return true;
         }
         else {
@@ -70,49 +64,55 @@ var keyboard = {
 
 }
 
-
 // GAME FUNCTIONS --------------------------------
 
-
-// ROUND FUNCTIONS --------------------------------
-
-// MAIN ROUND
-function round(game, hiddenword, keyboard) {
-    lives = 9
-    win = false;
-
-    while (lives > 0 & !win) {
-        key = "H";
-        if (guess(hiddenWord, key)) {
-            keyboard.correctKey(key);
-            return true;
+// Does word include char
+function guess(char, game, hiddenword, keyboard) {
+    if (keyboard.validChar(char) & keyboard.uniqueChar(char)) {
+        if (hiddenword.word.includes(char)) {
+            keyboard.correctKey(char);
+            revealChar(char);
         }
-        keyboard.wrongKey(key);
-        return false;
+        else {
+            keyboard.wrongKey(char);
+            game.lives -= 1;
+        }
     }
-        
 }
 
-// Does word include char
-function guess(word, char) {
-    if (word.includes(char)) {
-        return true;
+function update(game, hiddenword, keyboard) {
+    if (game.lives = 0) {
+        game.loses += 1;
     }
-    return false;
+    else if (keyboard.correct_keys.length == hiddenword.word.length) {
+        game.wins += 1;
+        reset (hiddenword,keyboard);
+    }
+}
+
+function reset(hiddenword, keyboard) {
+    
 }
 
 
 // HIDDEN WORD FUNCTIONS --------------------------------
 
+// Initialize hidden word and display on screen
+function convertWord(string) {
+    word_caps = string.toUpperCase();
+    word_array = word_caps.split("");
+    return word_array;
+}
+
 // Create divs
-function createPlaceholders(word) {
+function createPlaceholders(word_array) {
     var row = document.getElementById("hidden-word");
     
-    for (i=0; i < word.length; i++) {
+    for (i=0; i < word_array.length; i++) {
         var newDiv = document.createElement("h2");
         newDiv.textContent = "_";
         newDiv.setAttribute("class", "col-md-1 hidden-char");
-        newDiv.setAttribute("id", "hidden_" + word[i])
+        newDiv.setAttribute("id", "hidden_" + word_array[i])
         row.appendChild(newDiv);
     }
 }
@@ -124,22 +124,16 @@ function revealChar(char) {
 }
 
 
-// KEYBOARD FUNCTIONS --------------------------------
-
-
-
 // TESTING --------------------------------
-kb = keyboard;
-
-createPlaceholders("HELLO")
-
-/* g = game;
-kb = keyboard;
-word = hiddenWord;
-
-while (g.wins < 1) {
-    round(g, )
-} */
 
 
 // MAIN --------------------------------
+game = game;
+hw = hiddenWord;
+kb = keyboard;
+
+hw.wordGen();
+createPlaceholders(hw.word);
+
+guess("H", game, hw, kb)
+guess(".", game, hw, kb)

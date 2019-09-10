@@ -8,6 +8,14 @@
     text-align: center;
 }
 
+#hidden-word {
+    margin-top: 50px;
+}
+
+.keyboard {
+    margin-top: 50px;
+}
+
 .key {
     border-style: ridge;
     border-width: 1px;
