@@ -76,17 +76,19 @@ function createPlaceholders(word) {
     var row = document.getElementById("hidden-word");
     
     for (i=0; i < word.length; i++) {
-        var newDiv = document.createElement("div");
+        var newDiv = document.createElement("h2");
         newDiv.textContent = "_";
         newDiv.setAttribute("class", "col-md-1 hidden-char");
-        newDiv.setAttribute("id", word[i])
+        newDiv.setAttribute("id", "hidden_" + word[i])
         row.appendChild(newDiv);
     }
 }
 
-function revealChar(word) {
-    
-}
+// Reveal char
+function revealChar(char) {
+    var hidden = document.getElementById("hidden_" + char);
+    hidden.textContent = char;
+]}
 
 
 //KEYBOARD FUNCTIONS //
@@ -100,3 +102,4 @@ function revealChar(word) {
 var hidden = hiddenWord;
 hidden.convertword("hello");
 createPlaceholders(hidden.word);
+revealChar("H")
