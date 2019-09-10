@@ -60,6 +60,19 @@ var keyboard = {
 
         var id = "#" + key;
         $(id).css("color", "red");
+    },
+
+    clear() {
+        this.correct_keys.forEach(function(element) {
+            var id = "#" + element;
+            $(id).css("color", "black");
+        })
+        this.correct_keys = [];
+        this.wrong_keys.forEach(function(element) {
+            var id = "#" + element;
+            $(id).css("color", "black");
+        })
+        this.wrong_keys = [];
     }
 
 }
@@ -83,6 +96,7 @@ function guess(char, game, hiddenword, keyboard) {
 function update(game, hiddenword, keyboard) {
     if (game.lives = 0) {
         game.loses += 1;
+        reset(hiddenword,keyboard);
     }
     else if (keyboard.correct_keys.length == hiddenword.word.length) {
         game.wins += 1;
@@ -91,7 +105,8 @@ function update(game, hiddenword, keyboard) {
 }
 
 function reset(hiddenword, keyboard) {
-    
+    hiddenword.wordGen();
+    keyboard.clear();
 }
 
 
