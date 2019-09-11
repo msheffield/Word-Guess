@@ -4,7 +4,7 @@ Javascript for Word-Guess game.
 
 var game = {
     wins: 0,
-    loses: 0,
+    losses: 0,
     lives: 9,
 }
 
@@ -86,6 +86,7 @@ function round(game, hiddenword, keyboard) {
     createPlaceholders(hiddenword.word);
 
     document.onkeyup = function(event) {
+        console.log("key pressed");
         uInput = event.key.toUpperCase();
         guess(uInput, game, hiddenword, keyboard);
         update(game, hiddenword, keyboard);
@@ -103,22 +104,32 @@ function guess(char, game, hiddenword, keyboard) {
         else {
             keyboard.wrongKey(char);
             game.lives -= 1;
+            console.log("wrong");
         }
     }
 }
 
 function update(game, hiddenword, keyboard) {
-    console.log(keyboard.correct_keys.length)
-    console.log(hiddenword.word.length)
+    console.log("update");
+
     if (game.lives == 0) {
-        game.loses += 1;
+        game.losses += 1;
         reset(hiddenword,keyboard);
+        game.lives = 9;
     }
-    
+
     if (keyboard.correct_keys.length == hiddenword.word.length) {
+        console.log("win");
         game.wins += 1;
         reset (hiddenword,keyboard);
     }
+
+    var wins = document.getElementById("wins");
+    var losses = document.getElementById("losses");
+    var lives = document.getElementById("lives");
+    wins.textContent = game.wins;
+    losses.textContent = game.losses;
+    lives.textContent = game.lives;
 }
 
 function reset(hiddenword, keyboard) {
@@ -161,11 +172,6 @@ function revealChar(char) {
 game = game;
 hw = hiddenWord;
 kb = keyboard;
-var wins = document.getElementById("wins");
-var loses = document.getElementById("loses");
-var lives = document.getElementById("lives");
-wins.textContent = game.wins;
-loses.textContent = game.loses;
-lives.textContent = game.lives;
+
 
 round(game, hw, kb);
