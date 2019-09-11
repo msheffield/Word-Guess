@@ -275,6 +275,8 @@ var hiddenWord = {
         else {
             this.pastWords.push(newWord);
             this.word = convertWord(newWord);
+            createPlaceholders(this.word);
+            console.log(this.word);
         }
 
     },
@@ -335,20 +337,20 @@ var keyboard = {
 
 // GAME FUNCTIONS --------------------------------
 
-function round(game, hiddenword, keyboard) {
+/* function round(game, hiddenword, keyboard) {
     console.log("round start");
     hiddenword.wordGen();
+    console.log(hiddenword.word);
     keyboard.clear();
     createPlaceholders(hiddenword.word);
 
     document.onkeyup = function(event) {
-        console.log("key pressed");
         uInput = event.key.toUpperCase();
         guess(uInput, game, hiddenword, keyboard);
         update(game, hiddenword, keyboard);
     };
     
-}
+} */
 
 // Does word include char
 function guess(char, game, hiddenword, keyboard) {
@@ -360,7 +362,6 @@ function guess(char, game, hiddenword, keyboard) {
         else {
             keyboard.wrongKey(char);
             game.lives -= 1;
-            console.log("wrong");
         }
     }
 }
@@ -389,6 +390,7 @@ function update(game, hiddenword, keyboard) {
 }
 
 function reset(hiddenword, keyboard) {
+    console.log("reset");
     hiddenword.wordGen();
     keyboard.clear();
 }
@@ -405,6 +407,7 @@ function convertWord(string) {
 
 // Create divs
 function createPlaceholders(word_array) {
+    console.log("create placeholders");
     var row = document.getElementById("hidden-word");
     $("#hidden-word").empty();
     
@@ -430,4 +433,12 @@ hw = hiddenWord;
 kb = keyboard;
 
 
-round(game, hw, kb);
+console.log("round start");
+hw.wordGen();
+kb.clear();
+
+document.onkeyup = function(event) {
+    uInput = event.key.toUpperCase();
+    guess(uInput, game, hw, kb);
+    update(game, hw, kb);
+};
