@@ -356,8 +356,13 @@ var keyboard = {
 function guess(char, game, hiddenword, keyboard) {
     if (keyboard.validChar(char) & keyboard.uniqueChar(char)) {
         if (hiddenword.word.includes(char)) {
-            keyboard.correctKey(char);
-            revealChar(char);
+            for (i=0; i<hiddenWord.word.length; i++) {
+                if (hiddenWord.word[i] == char) {
+                    keyboard.correctKey(char);
+                    revealChar(char, i);
+                }
+                
+            } 
         }
         else {
             keyboard.wrongKey(char);
@@ -378,6 +383,7 @@ function update(game, hiddenword, keyboard) {
     if (keyboard.correct_keys.length == hiddenword.word.length) {
         console.log("win");
         game.wins += 1;
+        game.lives = 9;
         reset (hiddenword,keyboard);
     }
 
@@ -415,14 +421,14 @@ function createPlaceholders(word_array) {
         var newDiv = document.createElement("h2");
         newDiv.textContent = "_";
         newDiv.setAttribute("class", "col-md-1 hidden-char");
-        newDiv.setAttribute("id", "hidden_" + word_array[i])
+        newDiv.setAttribute("id", "hidden_" + i)
         row.appendChild(newDiv);
     }
 }
 
 // Reveal char
-function revealChar(char) {
-    var hidden = document.getElementById("hidden_" + char);
+function revealChar(char, index) {
+    var hidden = document.getElementById("hidden_" + index);
     hidden.textContent = char;
 }
 
