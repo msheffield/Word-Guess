@@ -448,3 +448,9 @@ document.onkeyup = function(event) {
     guess(uInput, game, hw, kb);
     update(game, hw, kb);
 };
+
+$(".key").on("click", function(event) {
+    id = $(this).find("span").attr('id');
+    guess(id, game, hw, kb);
+    update(game, hw, kb);
+})
